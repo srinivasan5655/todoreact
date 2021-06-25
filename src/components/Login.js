@@ -1,15 +1,20 @@
 import useStyles from "./LoginStyles";
 import { useState } from "react";
 import { Typography, TextField, Paper, Button, Grid } from "@material-ui/core";
-import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 const Login = (props) => {
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const dispatch = useDispatch();
+  const [error, setError] = useState(false);
   const history = useHistory();
+
+  // useEffect(() => {
+  // auth.onAuthStateChanged(() => {
+  //   dispatch({ type: "SIGN_IN" });
+  // });
+  // });
 
   const renderGoogleAuth = (props) => {
     if (props.googleAuth) {
@@ -33,10 +38,11 @@ const Login = (props) => {
       history.push("/loading");
       await props.signupAndSignin(email, password);
       history.push("/todolist");
-      dispatch({ type: "SIGN_IN" });
+      console.log("i am here");
     } catch (err) {
       alert("Please Check you Email or password");
-      history.push("/");
+      console.log(err);
+      setError(true);
     }
   };
 
@@ -62,22 +68,26 @@ const Login = (props) => {
               <TextField
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
+                required
                 fullWidth
                 type="email"
                 margin="normal"
                 size="small"
                 variant="standard"
                 label="Enter Your Email"
+                error={error}
               ></TextField>
               <TextField
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
+                required
                 fullWidth
                 type="password"
                 margin="normal"
                 size="small"
                 variant="standard"
                 label="Enter Your password"
+                error={error}
               ></TextField>
               <Button
                 type="submit"

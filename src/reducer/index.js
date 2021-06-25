@@ -1,14 +1,16 @@
 import { combineReducers } from "redux";
+import { firebaseReducer } from "react-redux-firebase";
+import { firestoreReducer } from "redux-firestore";
 
-const signIn = (state = false, action) => {
-  switch (action.type) {
-    case "SIGN_IN":
-      return !state;
-    default:
-      return state;
-  }
-};
+// const user = (state = null, action) => {
+//   if ((action.type = "SIGN_IN")) {
+//     return { ...action.payload };
+//   } else {
+//     return state;
+//   }
+// };
 
-export default combineReducers({
-  signIn,
+export const rootReducer = combineReducers({
+  firebase: firebaseReducer,
+  firestore: firestoreReducer,
 });
